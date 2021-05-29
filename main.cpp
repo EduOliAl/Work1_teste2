@@ -44,11 +44,11 @@ int main()
     }
     else
     {
-        cout << "Erro" << endl;
+        cout << "Erro ao abrir o arquivo" << endl;
         exit(1);
     } 
 
-    //lê o que tá no arquivo binário
+    //lê o que tá no arquivo binário artistas.dat
     ifstream fileI;
     fileI.open("artistas.dat", ios::in | ios::binary);
 
