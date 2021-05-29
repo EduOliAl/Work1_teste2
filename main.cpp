@@ -30,7 +30,7 @@ int main()
         getline(fileIn, id, ',');
         getline(fileIn, followers, ',');
         getline(fileIn, name, ',');
-        getline(fileIn, popularity, ',');
+        getline(fileIn, popularity, '\n');
 
         art1.id = id;
         art1.followers = followers;
@@ -51,10 +51,7 @@ int main()
 
     if(fileOut.is_open())
     {
-        fileOut.write((char*)&(art1.id), sizeof(Artista));
-        fileOut.write((char*)&(art1.followers), sizeof(Artista));
-        fileOut.write((char*)&(art1.name), sizeof(Artista));
-        fileOut.write((char*)&(art1.popularity), sizeof(Artista));
+        fileOut.write((char*)&art1, sizeof(Artista));
 
         fileOut.close();
     }
@@ -75,15 +72,14 @@ int main()
         string name;
         string popularity;
 
-        fileI.read((char*)&id, sizeof(Artista));
-        fileI.read((char*)&followers, sizeof(Artista));
-        fileI.read((char*)&name, sizeof(Artista));
-        fileI.read((char*)&popularity, sizeof(Artista));
+        Artista art;
 
-        cout << "id: " << id << endl;
-        cout << "followers: " << followers << endl;
-        cout << "name: " << name << endl;
-        cout << "popularity: " << popularity << endl;
+        fileI.read((char*)&art, sizeof(Artista));
+
+        cout << "id: " << art.id << endl;
+        cout << "followers: " << art.followers << endl;
+        cout << "name: " << art.name << endl;
+        cout << "popularity: " << art.popularity << endl;
 
         fileI.close();
     }
