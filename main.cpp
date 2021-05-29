@@ -76,6 +76,7 @@ int main()
 
         fileI.read((char*)&art, sizeof(Artista));
 
+        cout << "\nLendo dados no arquivo em binario: " << endl;
         cout << "id: " << art.id << endl;
         cout << "followers: " << art.followers << endl;
         cout << "name: " << art.name << endl;
