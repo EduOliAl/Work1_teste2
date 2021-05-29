@@ -22,20 +22,10 @@ int main()
 
     if(fileIn.is_open())
     {
-        string id;
-        string followers;
-        string name;
-        string popularity;
-
-        getline(fileIn, id, ',');
-        getline(fileIn, followers, ',');
-        getline(fileIn, name, ',');
-        getline(fileIn, popularity, '\n');
-
-        art1.id = id;
-        art1.followers = followers;
-        art1.name = name;
-        art1.popularity = popularity;
+        getline(fileIn, art1.id, ',');
+        getline(fileIn, art1.followers, ',');
+        getline(fileIn, art1.name, ',');
+        getline(fileIn, art1.popularity, '\n');
 
         fileIn.close();
     }
@@ -51,8 +41,7 @@ int main()
 
     if(fileOut.is_open())
     {
-        fileOut.write((char*)&art1, sizeof(Artista));
-
+        fileOut.write((char*)(&art1), sizeof(Artista));
         fileOut.close();
     }
     else
@@ -67,14 +56,9 @@ int main()
 
     if(fileI.is_open())
     {
-        string id;
-        string followers;
-        string name;
-        string popularity;
-
         Artista art;
 
-        fileI.read((char*)&art, sizeof(Artista));
+        fileI.read((char*)(&art), sizeof(Artista));
 
         cout << "\nLendo dados no arquivo em binario: " << endl;
         cout << "id: " << art.id << endl;
@@ -89,6 +73,7 @@ int main()
         cout << "Erro" << endl;
         exit(1);
     } 
+
 
 
 return 0;
