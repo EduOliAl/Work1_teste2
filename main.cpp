@@ -18,7 +18,7 @@ struct Artista
 };
 
 
-void artista_Save(Artista &art, fstream &fileOut) 
+void artista_Save(Artista &art, ofstream &fileOut) 
 {
     fileOut.write(art.id, sizeof(art.id));
     fileOut.write((char*)&art.followers, sizeof(art.followers));
@@ -26,29 +26,25 @@ void artista_Save(Artista &art, fstream &fileOut)
     fileOut.write((char*)&art.popularity, sizeof(art.popularity));
 }
 
-void artista_Read(Artista &art, ifstream &fileI) 
+Artista* artista_Read(ifstream &fileI) 
 {
-    Artista artR;
+    Artista *art = new Artista();
 
-    fileI.read(artR.id, sizeof(art.id));
-    fileI.read((char*)&artR.followers, sizeof(art.followers));
-    fileI.read(artR.name, sizeof(art.name));
-    fileI.read((char*)&artR.popularity, sizeof(art.popularity));
+    fileI.read(art->id, sizeof(art->id));
+    fileI.read((char*)&art->followers, sizeof(art->followers));
+    fileI.read(art->name, sizeof(art->name));
+    fileI.read((char*)&art->popularity, sizeof(art->popularity));
 
-    cout << "\nLendo dados de arquivo binario: " << endl;
-    cout << "id: " << artR.id << endl;
-    cout << "followers: " <<  artR.followers << endl;
-    cout << "name: " << artR.name << endl;
-    cout << "popularity: " << artR.popularity << endl;
+    return art;
 }
 
-void imprime_Artista(Artista &art)
+void imprime_Artista(Artista *art)
 {
     cout << "Lendo dados de struct Artista: " << endl;
-    cout << "id: " << art.id << endl;
-    cout << "followers: " <<  art.followers << endl;
-    cout << "name: " << art.name << endl;
-    cout << "popularity: " << art.popularity << endl;
+    cout << "id: " << art->id << endl;
+    cout << "followers: " <<  art->followers << endl;
+    cout << "name: " << art->name << endl;
+    cout << "popularity: " << art->popularity << endl << endl;
 }
 
 int main()
@@ -77,7 +73,7 @@ int main()
         //strcpy(art1.popularity, tmp.c_str());
         art1.popularity = atoi(tmp.c_str());
 
-        imprime_Artista(art1);
+        imprime_Artista(&art1);
 
         fileIn.close();
     }
@@ -88,7 +84,7 @@ int main()
     } 
 
     //pega o q tá no struct e salva em arquivo binário
-    fstream fileOut;
+    ofstream fileOut;
     fileOut.open("artistas.bin", ios::out | ios::binary); 
 
     if(fileOut.is_open())
@@ -108,8 +104,13 @@ int main()
 
     if(fileI.is_open())
     {
-        artista_Read(art1, fileI);
+        Artista *artRead;
+
+        artRead = artista_Read(fileI);
+        cout << "\nLendo de dados binarios: " << endl;
+        imprime_Artista(artRead);
         fileI.close();
+        delete artRead;
     }
     else
     {
